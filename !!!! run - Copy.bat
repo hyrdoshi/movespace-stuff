@@ -1,2 +1,0 @@
-py jdnext.py
-pause
