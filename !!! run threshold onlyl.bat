@@ -1,2 +1,0 @@
-py Threshold.py
-pause
