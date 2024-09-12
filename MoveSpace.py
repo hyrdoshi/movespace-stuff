@@ -3,8 +3,7 @@ import json, struct
 class MoveSpace:
     def DeSerialize(input,output):
         movespace={}
-        running=True
-        # read the header
+        # Endianness Check
         m=open(input,'rb')
         m.read(4)
         
@@ -28,16 +27,21 @@ class MoveSpace:
         movespace['measureCount']=struct.unpack('>I',m.read(4))[0]
         movespace['energyMeasureCount']=struct.unpack('>I',m.read(4))[0]
         movespace['moveCustomizationFlags']=struct.unpack('>I',m.read(4))[0]
-        #x,y data
+        # Floats, we dont really know how measures work
         movespace['measures']=[]
 
-        while running:
-            byte=m.read(4)
-            if byte==b'':
-                running=False
-            else:
-                movespace['measures'].append(struct.unpack('>f',byte)[0])
+        # Deprecated
+        # while running:
+            # byte=m.read(4)
+            # if byte==b'':
+                # running=False
+            # else:
+                # movespace['measures'].append(struct.unpack('>f',byte)[0])
 
+        # Instead this is better and faster
+        while i := m.read(4):
+            movespace['measures'].append(struct.unpack('>f',byte)[0])
+        
         json.dump(movespace,open(output,'w'))
 
     def Serialize(input,output):
