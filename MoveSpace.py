@@ -40,7 +40,7 @@ class MoveSpace:
 
         # Instead this is better and faster
         while i := m.read(4):
-            movespace['measures'].append(struct.unpack('>f',byte)[0])
+            movespace['measures'].append(struct.unpack('>f',i)[0]) # byte is not definted here, so use i instead
         
         json.dump(movespace,open(output,'w'))
 
